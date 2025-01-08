@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import { ModeToggle } from "./ui/mode-toggle";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 export default function Navbar() {
   return (
@@ -22,7 +23,19 @@ export default function Navbar() {
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
-        <ModeToggle/>
+        <ModeToggle />
+        <div className="p-2 flex items-center justify-center text-primary-foreground hover:brightness-75 transition-all">
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton appearance={{
+              elements: {
+                userButtonAvatarBox: 'h-9 w-9'
+              }
+            }} />
+          </SignedIn>
+        </div>
       </NavigationMenuList>
     </NavigationMenu>
   );

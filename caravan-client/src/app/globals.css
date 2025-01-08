@@ -71,3 +71,9 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+.cl-internal-1hp5nqm,
+.cl-internal-df7v37,
+.cl-internal-13u79ez {
+  @apply hidden;
+}
