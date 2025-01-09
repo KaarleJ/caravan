@@ -1,7 +1,34 @@
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import Link from "next/link";
+
 export default function Home() {
   return (
-    <main className="flex flex-col gap-8 px-24 py-48">
-      <h1>Caravan</h1>
+    <main className="flex flex-row py-52 px-48">
+      <div>
+        <h1 className="text-primary text-8xl italic mb-6">Caravan</h1>
+        <div className="ml-2 space-y-6">
+          <p className="text-2xl">Share rides easily with your friends</p>
+          <p className="text-lg">
+            Caravan makes ride-sharing with friends a breeze. Plan your trip,
+            share the link, and let drivers and passengers sign up—no fuss, no
+            spreadsheets. It’s a one-stop solution to see who’s driving, who’s
+            riding, and how many seats are left.
+          </p>
+        </div>
+        <Link href="/login" passHref>
+          <Button className="my-16 p-6 text-xl">Get Started</Button>
+        </Link>
+      </div>
+      <div className="rounded-sm shadow-lg shadow-primary overflow-hidden">
+        <Image
+          src="/caravan.jpg"
+          width={1600}
+          height={1000}
+          alt="caravan"
+          className=""
+        />
+      </div>
     </main>
   );
 }

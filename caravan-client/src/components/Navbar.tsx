@@ -7,14 +7,22 @@ import {
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import { ModeToggle } from "./ui/mode-toggle";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { auth } from "@/auth";
+import Image from "next/image";
 
-export default function Navbar() {
+export default async function Navbar() {
+  const session = await auth();
   return (
-    <NavigationMenu className="px-8 py-3 max-w-full bg-primary justify-between">
-      <div className="text-primary-foreground text-lg">
-        Application logo here
-      </div>
+    <NavigationMenu className="px-48 py-3 max-w-full w-full shadow-md justify-between absolute top-0 right-0 border-b backdrop-opacity-75 backdrop-blur-lg">
+      <Link href="/">
+        <Image
+          src="/caravan-banner.png"
+          width={100}
+          height={50}
+          alt="caravan link"
+          className="w-auto"
+        />
+      </Link>
       <NavigationMenuList>
         <NavigationMenuItem>
           <Link href="/" legacyBehavior passHref>
@@ -24,18 +32,17 @@ export default function Navbar() {
           </Link>
         </NavigationMenuItem>
         <ModeToggle />
-        <div className="p-2 flex items-center justify-center text-primary-foreground hover:brightness-75 transition-all">
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton appearance={{
-              elements: {
-                userButtonAvatarBox: 'h-9 w-9'
-              }
-            }} />
-          </SignedIn>
-        </div>
+        {session ? (
+          <div>ProfileMenu</div>
+        ) : (
+          <NavigationMenuItem>
+            <Link href="/login" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Login
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+        )}
       </NavigationMenuList>
     </NavigationMenu>
   );
