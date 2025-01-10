@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex flex-row py-52 px-48">
+    <main className="flex flex-col lg:flex-row gap-4 py-24 md:py-52 px-4 md:px-48">
       <div>
         <h1 className="text-primary text-8xl italic mb-6">Caravan</h1>
         <div className="ml-2 space-y-6">
@@ -26,7 +26,7 @@ export default function Home() {
           width={1600}
           height={1000}
           alt="caravan"
-          className=""
+          className="w-full h-full object-cover"
         />
       </div>
     </main>
