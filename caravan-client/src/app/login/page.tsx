@@ -26,7 +26,7 @@ export default async function Login({
                 });
               }}
             >
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full" variant="secondary">
                 Sign in with {provider.name}{" "}
                 <ProviderIcon provider={provider.name} />
               </Button>
@@ -47,9 +47,8 @@ export default async function Login({
 }
 
 function ProviderIcon({ provider }: { provider: string }) {
-  console.log(provider);
   switch (provider) {
-    case "google":
+    case "Google":
       return <Google size={26} />;
     case "GitHub":
       return <Github size={36} />;
