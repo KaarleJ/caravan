@@ -6,18 +6,30 @@ import type { Provider } from "next-auth/providers";
 
 const providers: Provider[] = [
   Credentials({
-    credentials: { password: { label: "Password", type: "password" } },
+    credentials: {
+      email: { label: "Email", type: "email" },
+      password: { label: "Password", type: "password" },
+      mode: { label: "Mode", type: "text" },
+    },
     authorize(c) {
-      if (c.password !== "password") return null;
-      return {
-        id: "test",
-        name: "Test User",
-        email: "test@example.com",
+      const { email, password, mode } = c as {
+        email: string;
+        password: string;
+        mode: "signup" | "signin";
       };
+
+      if (mode === "signup") {
+        console.log("Creating user", email);
+        return { id: "123", name: "Test User", email };
+      } else {
+        console.log("Logging in user", email);
+        if (password !== "password") return null;
+        return { id: "123", name: "Test User", email };
+      }
     },
   }),
   GitHub,
-  Google
+  Google,
 ];
 
 export const providerMap = providers

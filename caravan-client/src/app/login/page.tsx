@@ -3,6 +3,8 @@ import { FaGoogle as Google } from "react-icons/fa";
 import { FaGithub as Github } from "react-icons/fa";
 import { Separator } from "@/components/ui/separator";
 import { signIn, providerMap } from "@/auth";
+import SignInForm from "@/components/SignInForm";
+import Link from "next/link";
 
 export default async function Login({
   searchParams,
@@ -38,9 +40,13 @@ export default async function Login({
           <p className="mx-2">or</p>
           <Separator className="w-[8rem]" />
         </div>
-        <Button className="w-full my-6">Create an account</Button>
-        <p className="text-xl text-center">Already have an account?</p>
-        <Button className="w-full my-6">Login</Button>
+        <SignInForm />
+        <p className="text-xl text-center">Need an account?</p>
+        <Link href="/register" passHref>
+          <Button className="w-full my-6" variant="secondary">
+            Create an account
+          </Button>
+        </Link>
       </div>
     </div>
   );
