@@ -3,6 +3,7 @@ import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import type { Provider } from "next-auth/providers";
+import { createUser, login, register } from "./actions/auth";
 
 const providers: Provider[] = [
   Credentials({
@@ -11,7 +12,7 @@ const providers: Provider[] = [
       password: { label: "Password", type: "password" },
       mode: { label: "Mode", type: "text" },
     },
-    authorize(c) {
+    async authorize(c) {
       const { email, password, mode } = c as {
         email: string;
         password: string;
@@ -19,12 +20,11 @@ const providers: Provider[] = [
       };
 
       if (mode === "signup") {
-        console.log("Creating user", email);
-        return { id: "123", name: "Test User", email };
+        const user = await register({ email, password });
+        return user;
       } else {
-        console.log("Logging in user", email);
-        if (password !== "password") return null;
-        return { id: "123", name: "Test User", email };
+        const user = await login({ email, password });
+        return user;
       }
     },
   }),
@@ -47,5 +47,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   providers,
   pages: {
     signIn: "/signin",
+  },
+  callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === "credentials") {
+        return true;
+      }
+
+      const payload = {
+        id: user.id as string,
+        email: user.email as string,
+        profilePicture: user.image,
+      };
+
+      const res = await createUser(payload);
+      console.log(res);
+      return true;
+    },
   },
 });

@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "./ui/button";
-import { signInWithCredentials } from "@/actions";
+import { signInWithCredentials } from "@/actions/signIn";
 import { AuthError } from "next-auth";
 
 export default function SignUpForm() {

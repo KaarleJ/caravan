@@ -14,7 +14,7 @@ export default function AvatarMenu({
   user?: { image?: string | null };
 }) {
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger className="rounded-full">
         <Avatar>
           <AvatarImage src={user?.image || ""} />

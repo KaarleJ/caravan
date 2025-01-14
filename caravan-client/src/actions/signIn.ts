@@ -1,7 +1,7 @@
 "use server";
 import { z } from "zod";
-import { signIn } from "./auth";
-import { signInFormSchema } from "./lib/formSchemas";
+import { signIn } from "../auth";
+import { signInFormSchema } from "../lib/formSchemas";
 import { NextResponse } from "next/server";
 
 export async function signInWithCredentials(
@@ -13,6 +13,5 @@ export async function signInWithCredentials(
     password: values.password,
     mode,
   });
-  console.log("Signed in");
   return NextResponse.redirect(new URL("/venues", window.location.origin));
 }
