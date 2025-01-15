@@ -43,9 +43,9 @@ export async function createUser(user: CreateUserRequest) {
     body: JSON.stringify(user),
   });
 
-  if (!res.ok) {
-    throw new Error("Failed to create user");
+  if (res.ok) {
+    return true;
+  } else {
+    return false;
   }
-
-  return res.json();
 }

@@ -60,9 +60,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         profilePicture: user.image,
       };
 
-      const res = await createUser(payload);
-      console.log(res);
-      return true;
+      return await createUser(payload);
     },
   },
 });

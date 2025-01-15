@@ -2,6 +2,7 @@ package org.caravan.services;
 
 import org.caravan.dto.AuthRequest;
 import org.caravan.dto.UserResponse;
+import org.caravan.mapper.UserMapper;
 import org.caravan.model.User;
 import org.caravan.repository.UserRepository;
 
@@ -23,11 +24,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.getPassword().toCharArray());
 
     if (result.verified) {
-      return UserResponse.builder()
-          .id(user.getId())
-          .email(user.getEmail())
-          .profilePicture(user.getProfilePicture())
-          .build();
+      return UserMapper.toUserResponse(user);
     } else {
       throw new RuntimeException("Invalid password");
     }
@@ -45,10 +42,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     userRepository.persist(user);
 
-    return UserResponse.builder()
-        .id(user.getId())
-        .email(user.getEmail())
-        .profilePicture(user.getProfilePicture())
-        .build();
+    return UserMapper.toUserResponse(user);
   }
 }
