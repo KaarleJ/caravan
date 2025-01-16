@@ -1,0 +1,2 @@
+# Ignore shadcn code from language statistics since it only contains copy pasted code.
+src/components/ui/* linguist-vendored
