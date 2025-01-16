@@ -1,5 +1,5 @@
 "use server";
-
+import apiClient from "@/lib/apiClient";
 import { AuthRequest, CreateUserRequest } from "@/types";
 
 const apiUrl = process.env.API_URL || "http://localhost:4000";
@@ -35,17 +35,11 @@ export async function register(user: AuthRequest) {
 }
 
 export async function createUser(user: CreateUserRequest) {
-  const res = await fetch(`${apiUrl}/users`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  });
-
-  if (res.ok) {
+  try {
+    await apiClient.post("/users", user);
     return true;
-  } else {
+  } catch (e) {
+    console.error(e);
     return false;
   }
 }

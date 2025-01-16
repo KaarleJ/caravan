@@ -4,6 +4,7 @@ import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import type { Provider } from "next-auth/providers";
 import { createUser, login, register } from "./actions/auth";
+import { CreateUserRequest } from "./types";
 
 const providers: Provider[] = [
   Credentials({
@@ -54,13 +55,23 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         return true;
       }
 
-      const payload = {
-        id: user.id as string,
+      const payload: CreateUserRequest = {
+        id: user.id,
         email: user.email as string,
-        profilePicture: user.image,
+        profilePicture: user.image as string | null,
       };
 
       return await createUser(payload);
+    },
+    jwt({ token, account }) {
+      if (account) {
+        return { ...token, accessToken: account.access_token };
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.accessToken = token.accessToken as string;
+      return session;
     },
   },
 });
