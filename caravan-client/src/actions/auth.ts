@@ -1,9 +1,13 @@
 "use server";
 import apiClient from "@/lib/apiClient";
-import { AuthRequest, CreateUserRequest } from "@/types";
+import { AuthRequest, CreateUserRequest, GetTokenRequest } from "@/types";
 
 const apiUrl = process.env.API_URL || "http://localhost:4000";
+const apiSecret = process.env.API_SHARED_SECRET;
 
+/*
+  Credentials provider authorize function
+*/
 export async function login(user: AuthRequest) {
   const res = await fetch(`${apiUrl}/auth/login`, {
     method: "POST",
@@ -18,6 +22,9 @@ export async function login(user: AuthRequest) {
   return res.json();
 }
 
+/*
+  Credentials provider authorize function for sign up
+*/
 export async function register(user: AuthRequest) {
   const res = await fetch(`${apiUrl}/auth/register`, {
     method: "POST",
@@ -42,4 +49,28 @@ export async function createUser(user: CreateUserRequest) {
     console.error(e);
     return false;
   }
+}
+
+/*
+  Fetch api token to interact with a custom backend
+*/
+export async function getApiToken(user: GetTokenRequest) {
+  const res = await fetch(`${apiUrl}/token`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      clientSecret: apiSecret,
+      userId: user.id,
+      email: user.email,
+      roles: user.roles,
+    }),
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch token");
+  }
+
+  return "token";
 }
