@@ -1,9 +1,13 @@
 package org.caravan.controller;
 
 import org.caravan.dto.AuthRequest;
+import org.caravan.dto.GetTokenRequest;
+import org.caravan.dto.TokenResponse;
 import org.caravan.dto.UserResponse;
 import org.caravan.services.AuthenticationService;
 
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.POST;
@@ -22,7 +26,6 @@ public class AuthenticationController {
   @Transactional
   @Path("/login")
   public UserResponse login(AuthRequest request) {
-    // do something
     return authenticationService.login(request);
   }
 
@@ -31,5 +34,13 @@ public class AuthenticationController {
   @Path("/register")
   public UserResponse register(AuthRequest request) {
     return authenticationService.register(request);
+  }
+
+  @POST
+  @Transactional
+  @Path("/token")
+  @PermitAll
+  public TokenResponse generateToken(GetTokenRequest request) {
+    return authenticationService.generateToken(request);
   }
 }
