@@ -43,7 +43,7 @@ export async function register(user: AuthRequest) {
 
 export async function createUser(user: CreateUserRequest) {
   try {
-    await apiClient.post("/users", user);
+    await apiClient.post("/users", { ...user, clientSecret: apiSecret });
     return true;
   } catch (e) {
     console.error(e);
@@ -55,22 +55,14 @@ export async function createUser(user: CreateUserRequest) {
   Fetch api token to interact with a custom backend
 */
 export async function getApiToken(user: GetTokenRequest) {
-  const res = await fetch(`${apiUrl}/token`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
+  try {
+    const res = await apiClient.post("/auth/token", {
+      ...user,
       clientSecret: apiSecret,
-      userId: user.id,
-      email: user.email,
-      roles: user.roles,
-    }),
-  });
-
-  if (!res.ok) {
+    });
+    return res.data.token;
+  } catch (e) {
+    console.error(e);
     throw new Error("Failed to fetch token");
   }
-
-  return "token";
 }

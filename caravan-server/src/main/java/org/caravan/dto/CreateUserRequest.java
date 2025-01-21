@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateUserRequest {
+  private String clientSecret;
   private String id;
   private String email;
   private String profilePicture;

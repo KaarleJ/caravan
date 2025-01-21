@@ -64,14 +64,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return await createUser(payload);
     },
     async jwt({ token, user }) {
-      const payload: GetTokenRequest = {
-        id: user.id as string,
-        email: user.email as string,
-        roles: ["user"],
-      };
+      if (user) {
+        const payload: GetTokenRequest = {
+          id: user.id as string,
+          email: user.email as string,
+          role: "user",
+        };
 
-      const apiToken = await getApiToken(payload);
-      return { ...token, apiToken };
+        const apiToken = await getApiToken(payload);
+        return { ...token, apiToken };
+      } else {
+        return token;
+      }
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken as string;

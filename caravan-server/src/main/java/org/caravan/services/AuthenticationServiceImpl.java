@@ -62,7 +62,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         .issuer("https://caravan.com/issuer")
         .subject(request.getUserId())
         .upn(request.getEmail())
-        .groups("user")
+        .groups(request.getRole())
         .expiresIn(3600)
         .sign();
 
