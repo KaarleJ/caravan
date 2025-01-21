@@ -9,8 +9,8 @@ apiClient.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
     const session = await auth();
 
-    if (session?.accessToken) {
-      config.headers.set("Authorization", `Bearer ${session.accessToken}`);
+    if (session?.apiToken) {
+      config.headers.set("Authorization", `Bearer ${session.apiToken}`);
     }
 
     return config;

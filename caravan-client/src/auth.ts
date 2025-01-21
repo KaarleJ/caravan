@@ -4,7 +4,7 @@ import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import type { Provider } from "next-auth/providers";
 import { createUser, getApiToken, login, register } from "./actions/auth";
-import { CreateUserRequest, GetTokenRequest } from "./types";
+import { CreateUserRequest } from "./types";
 
 const providers: Provider[] = [
   Credentials({
@@ -64,21 +64,46 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return await createUser(payload);
     },
     async jwt({ token, user }) {
+      // On initial sign-in store user details to token and fetch API token
       if (user) {
-        const payload: GetTokenRequest = {
+        token.id = user.id;
+        token.email = user.email as string;
+        token.role = "user";
+
+        const { token: apiToken, expiresIn } = await getApiToken({
           id: user.id as string,
           email: user.email as string,
           role: "user",
-        };
+        });
 
-        const apiToken = await getApiToken(payload);
-        return { ...token, apiToken };
-      } else {
-        return token;
+        token.apiToken = apiToken;
+        token.apiTokenExpiry = Date.now() + expiresIn * 1000;
       }
+
+      // If token is nearly expired, refresh it
+      const now = Date.now();
+      const shouldRefreshTime = 60 * 1000;
+      if (
+        token.apiTokenExpiry &&
+        now + shouldRefreshTime >= token.apiTokenExpiry
+      ) {
+        try {
+          const { token: newApiToken, expiresIn } = await getApiToken({
+            id: token.id as string,
+            email: token.email as string,
+            role: token.role as string,
+          });
+          token.apiToken = newApiToken;
+          token.apiTokenExpiry = Date.now() + expiresIn * 1000;
+        } catch (error) {
+          console.error("Failed to refresh token:", error);
+          await signOut();
+        }
+      }
+      return token;
     },
     async session({ session, token }) {
-      session.accessToken = token.accessToken as string;
+      session.apiToken = token.apiToken as string;
       return session;
     },
   },

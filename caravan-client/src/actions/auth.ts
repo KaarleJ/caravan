@@ -60,7 +60,7 @@ export async function getApiToken(user: GetTokenRequest) {
       ...user,
       clientSecret: apiSecret,
     });
-    return res.data.token;
+    return res.data;
   } catch (e) {
     console.error(e);
     throw new Error("Failed to fetch token");
