@@ -4,6 +4,7 @@ import org.caravan.dto.CreateUserRequest;
 import org.caravan.dto.UserResponse;
 import org.caravan.services.UserService;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.POST;
@@ -20,6 +21,7 @@ public class UserController {
 
   @POST
   @Transactional
+  @RolesAllowed("user")
   public UserResponse createUser(CreateUserRequest request) {
     return userService.createUser(request);
   }
