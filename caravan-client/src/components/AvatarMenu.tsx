@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User } from "lucide-react";
-import { signOut } from "@/auth";
+import { signOut } from "@/authConfig";
 
 export default function AvatarMenu({
   user,

@@ -1,8 +1,12 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-export const apiUrl = process.env.API_URL || "http://localhost:4000";
+const apiUrl = process.env.API_URL || "http://localhost:8080";
 
-export function cn(...inputs: ClassValue[]) {
+const sharedSecret = process.env.API_SHARED_SECRET;
+
+function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export { cn, sharedSecret, apiUrl };

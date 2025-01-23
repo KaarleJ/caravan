@@ -14,7 +14,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "./ui/button";
 import { signInWithCredentials } from "@/actions/signIn";
-import { AuthError } from "next-auth";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 export default function SignInForm() {
   const form = useForm<z.infer<typeof signInFormSchema>>({
@@ -24,21 +25,23 @@ export default function SignInForm() {
       password: "",
     },
   });
+  const searchParams = useSearchParams();
+  const error = searchParams.get("error");
 
-  async function onSubmit(values: z.infer<typeof signInFormSchema>) {
-    try {
-      await signInWithCredentials(values, "signin");
-    } catch (error) {
-      console.error(error);
-      if (error instanceof AuthError) {
-        form.setError("root", { message: "Invalid email or password" });
-      }
+  useEffect(() => {
+    if (error) {
+      form.setError("root", { message: error });
     }
-  }
+  }, [error, form]);
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 my-4">
+      <form
+        onSubmit={form.handleSubmit(
+          async (values) => await signInWithCredentials(values, "signin")
+        )}
+        className="space-y-4 my-4"
+      >
         <FormField
           control={form.control}
           name="email"

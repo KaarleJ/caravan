@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
 import { ModeToggle } from "./ui/mode-toggle";
-import { auth } from "@/auth";
+import { auth } from "@/authConfig";
 import Image from "next/image";
 import AvatarMenu from "./AvatarMenu";
 

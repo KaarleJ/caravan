@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { FaGoogle as Google } from "react-icons/fa";
 import { FaGithub as Github } from "react-icons/fa";
 import { Separator } from "@/components/ui/separator";
-import { signIn, providerMap } from "@/auth";
+import { signIn, providerMap } from "@/authConfig";
 import SignInForm from "@/components/SignInForm";
 import Link from "next/link";
 

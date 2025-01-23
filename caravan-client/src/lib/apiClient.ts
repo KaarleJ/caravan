@@ -1,8 +1,9 @@
-import { auth } from "@/auth";
+import { auth } from "@/authConfig";
 import axios, { InternalAxiosRequestConfig, AxiosError } from "axios";
+import { apiUrl } from "./utils";
 
 const apiClient = axios.create({
-  baseURL: process.env.API_URL || "http://localhost:8080",
+  baseURL: apiUrl,
 });
 
 apiClient.interceptors.request.use(

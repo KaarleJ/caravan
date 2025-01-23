@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth } from "@/authConfig";
 import Image from "next/image";
 
 export default async function Venues() {
