@@ -19,7 +19,7 @@ import jakarta.inject.Inject;
 @ApplicationScoped
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-  @ConfigProperty(name = "quarkus.api.shared-secret")
+  @ConfigProperty(name = "api.shared-secret")
   String apiSharedSecret;
 
   @Inject
