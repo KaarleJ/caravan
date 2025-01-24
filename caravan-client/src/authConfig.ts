@@ -5,6 +5,7 @@ import Credentials from "next-auth/providers/credentials";
 import type { Provider } from "next-auth/providers";
 import { createUser, getApiToken, login, register } from "./actions/auth";
 import { CreateUserRequest } from "./types";
+import axios from "axios";
 
 const providers: Provider[] = [
   Credentials({
@@ -20,12 +21,17 @@ const providers: Provider[] = [
         mode: "signup" | "signin";
       };
 
-      if (mode === "signup") {
-        const user = await register({ email, password });
-        return user;
-      } else {
-        const user = await login({ email, password });
-        return user;
+      try {
+        if (mode === "signup") {
+          return await register({ email, password });
+        } else {
+          return await login({ email, password });
+        }
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+          throw new Error(error.response.data);
+        }
+        throw new Error("Unexpected error during sign-in");
       }
     },
   }),

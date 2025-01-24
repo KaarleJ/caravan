@@ -7,31 +7,21 @@ import { AuthRequest, CreateUserRequest, GetTokenRequest } from "@/types";
   Credentials provider authorize function
 */
 export async function login(user: AuthRequest) {
-  try {
-    const res = await apiClient.post("/auth/login", {
-      ...user,
-      clientSecret: sharedSecret,
-    });
-    return res.data;
-  } catch (e) {
-    console.error(e);
-    throw new Error("Failed to login");
-  }
+  const res = await apiClient.post("/auth/login", {
+    ...user,
+    clientSecret: sharedSecret,
+  });
+  return res.data;
 }
 
 /*
   Credentials provider authorize function for sign up
 */
 export async function register(user: AuthRequest) {
-  try {
-    const res = await apiClient.post("/auth/register", {
-      ...user,
-    });
-    return res.data;
-  } catch (e) {
-    console.error(e);
-    throw new Error("Failed to register");
-  }
+  const res = await apiClient.post("/auth/register", {
+    ...user,
+  });
+  return res.data;
 }
 
 export async function createUser(user: CreateUserRequest) {
@@ -48,14 +38,9 @@ export async function createUser(user: CreateUserRequest) {
   Fetch api token to interact with a custom backend
 */
 export async function getApiToken(user: GetTokenRequest) {
-  try {
-    const res = await apiClient.post("/auth/token", {
-      ...user,
-      clientSecret: sharedSecret,
-    });
-    return res.data;
-  } catch (e) {
-    console.error(e);
-    throw new Error("Failed to fetch token");
-  }
+  const res = await apiClient.post("/auth/token", {
+    ...user,
+    clientSecret: sharedSecret,
+  });
+  return res.data;
 }
