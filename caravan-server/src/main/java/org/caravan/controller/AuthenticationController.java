@@ -9,6 +9,7 @@ import org.caravan.services.AuthenticationService;
 import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -24,14 +25,14 @@ public class AuthenticationController {
   @POST
   @Transactional
   @Path("/login")
-  public UserResponse login(AuthRequest request) {
+  public UserResponse login(@Valid AuthRequest request) {
     return authenticationService.login(request);
   }
 
   @POST
   @Transactional
   @Path("/register")
-  public UserResponse register(AuthRequest request) {
+  public UserResponse register(@Valid AuthRequest request) {
     return authenticationService.register(request);
   }
 
@@ -39,7 +40,7 @@ public class AuthenticationController {
   @Transactional
   @Path("/token")
   @PermitAll
-  public TokenResponse generateToken(GetTokenRequest request) {
+  public TokenResponse generateToken(@Valid GetTokenRequest request) {
     return authenticationService.generateToken(request);
   }
 }

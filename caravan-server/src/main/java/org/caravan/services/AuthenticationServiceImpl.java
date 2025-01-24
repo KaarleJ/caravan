@@ -4,6 +4,8 @@ import org.caravan.dto.AuthRequest;
 import org.caravan.dto.GetTokenRequest;
 import org.caravan.dto.TokenResponse;
 import org.caravan.dto.UserResponse;
+import org.caravan.exception.InvalidClientSecretException;
+import org.caravan.exception.InvalidCredentialsException;
 import org.caravan.mapper.UserMapper;
 import org.caravan.model.User;
 import org.caravan.repository.UserRepository;
@@ -25,6 +27,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
   public UserResponse login(AuthRequest request) {
     User user = userRepository.findByEmail(request.getEmail());
+    if (user == null) {
+      throw new InvalidCredentialsException("Wrong email or password");
+    }
 
     BCrypt.Result result = BCrypt.verifyer().verify(
         request.getPassword().toCharArray(),
@@ -33,7 +38,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     if (result.verified) {
       return UserMapper.toUserResponse(user);
     } else {
-      throw new RuntimeException("Invalid password");
+      throw new InvalidCredentialsException("Wrong email or password");
     }
   }
 
@@ -54,9 +59,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
   public TokenResponse generateToken(GetTokenRequest request) {
     String clientSecret = request.getClientSecret();
-    if (clientSecret == null || !clientSecret.equals(apiSharedSecret)) {
-      throw new RuntimeException("Invalid client secret");
-    }
+    validateClientSecret(clientSecret);
 
     String jwt = Jwt
         .issuer("https://caravan.com/issuer")
@@ -70,5 +73,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         .token(jwt)
         .expiresIn(3600)
         .build();
+  }
+
+  public void validateClientSecret(String clientSecret) {
+    if (clientSecret == null || !clientSecret.equals(apiSharedSecret)) {
+      throw new InvalidClientSecretException("Invalid client secret");
+    }
   }
 }

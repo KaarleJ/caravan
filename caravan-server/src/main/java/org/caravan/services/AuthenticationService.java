@@ -12,4 +12,6 @@ public interface AuthenticationService {
   public UserResponse register(AuthRequest request);
 
   public TokenResponse generateToken(GetTokenRequest request);
+
+  public void validateClientSecret(String clientSecret);
 }
