@@ -10,7 +10,7 @@ export type CreateUserRequest = {
 };
 
 export type GetTokenRequest = {
-  id: string;
+  userId: string;
   email: string;
   role: string;
 }

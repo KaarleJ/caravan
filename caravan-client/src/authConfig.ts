@@ -77,7 +77,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.role = "user";
 
         const { token: apiToken, expiresIn } = await getApiToken({
-          id: user.id as string,
+          userId: user.id as string,
           email: user.email as string,
           role: "user",
         });
