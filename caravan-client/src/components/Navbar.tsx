@@ -26,9 +26,9 @@ export default async function Navbar() {
       </Link>
       <NavigationMenuList className="gap-2">
         <NavigationMenuItem>
-          <Link href="/venues" legacyBehavior passHref>
+          <Link href="/trips" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Venues
+              Trips
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
