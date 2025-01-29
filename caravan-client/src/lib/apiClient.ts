@@ -1,9 +1,13 @@
 import { auth } from "@/authConfig";
 import axios, { InternalAxiosRequestConfig, AxiosError } from "axios";
 import { apiUrl } from "./utils";
+import qs from "qs";
 
 const apiClient = axios.create({
   baseURL: apiUrl,
+  paramsSerializer: (params) => {
+    return qs.stringify(params, { arrayFormat: "repeat" });
+  },
 });
 
 apiClient.interceptors.request.use(
