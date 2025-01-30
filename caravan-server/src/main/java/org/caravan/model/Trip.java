@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -27,8 +28,9 @@ import lombok.Builder.Default;
 public class Trip {
 
   @Id
+  @GeneratedValue(generator = "tripSeq")
   @SequenceGenerator(name = "tripSeq", sequenceName = "trip_id_seq", allocationSize = 1, initialValue = 1)
-  private String id;
+  private Long id;
 
   private String name;
   private String description;

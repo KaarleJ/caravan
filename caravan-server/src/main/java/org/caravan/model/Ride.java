@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 public class Ride {
   @Id
   @SequenceGenerator(name = "rideSeq", sequenceName = "ride_id_seq", allocationSize = 1, initialValue = 1)
-  private String id;
+  private Long id;
 
   @ManyToOne
   @JoinColumn(name = "trip_id")
