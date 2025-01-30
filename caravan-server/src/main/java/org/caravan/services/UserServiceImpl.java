@@ -15,12 +15,7 @@ public class UserServiceImpl implements UserService {
   @Inject
   private UserRepository userRepository;
 
-  @Inject
-  private AuthenticationService authenticationService;
-
   public UserResponse createUser(CreateUserRequest request) {
-    authenticationService.validateClientSecret(request.getClientSecret());
-
     if (userRepository.findByEmail(request.getEmail()) != null) {
       return null;
     }

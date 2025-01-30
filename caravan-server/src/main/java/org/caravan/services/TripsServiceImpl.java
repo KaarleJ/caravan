@@ -26,8 +26,7 @@ public class TripsServiceImpl implements TripsService {
     return null;
   }
 
-  public TripResponse createTrip(CreateTripRequest request) {
-    User creator = userRepository.findById(request.getCreatedById());
+  public TripResponse createTrip(CreateTripRequest request, User creator) {
     Trip trip = Trip.builder()
         .name(request.getName())
         .description(request.getDescription())

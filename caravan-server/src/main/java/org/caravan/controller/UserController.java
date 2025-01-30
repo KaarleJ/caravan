@@ -2,6 +2,7 @@ package org.caravan.controller;
 
 import org.caravan.dto.CreateUserRequest;
 import org.caravan.dto.UserResponse;
+import org.caravan.security.TokenService;
 import org.caravan.services.UserService;
 
 import jakarta.annotation.security.PermitAll;
@@ -20,10 +21,14 @@ public class UserController {
   @Inject
   private UserService userService;
 
+  @Inject
+  private TokenService tokenService;
+
   @POST
   @Transactional
   @PermitAll
   public UserResponse createUser(@Valid CreateUserRequest request) {
+    tokenService.validateClientSecret(request.getClientSecret());
     return userService.createUser(request);
   }
 }

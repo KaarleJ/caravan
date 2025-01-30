@@ -4,7 +4,8 @@ import org.caravan.dto.AuthRequest;
 import org.caravan.dto.GetTokenRequest;
 import org.caravan.dto.TokenResponse;
 import org.caravan.dto.UserResponse;
-import org.caravan.services.AuthenticationService;
+import org.caravan.security.AuthenticationService;
+import org.caravan.security.TokenService;
 
 import jakarta.annotation.security.PermitAll;
 import jakarta.inject.Inject;
@@ -21,6 +22,9 @@ public class AuthenticationController {
 
   @Inject
   private AuthenticationService authenticationService;
+
+  @Inject
+  private TokenService tokenService;
 
   @POST
   @Transactional
@@ -41,6 +45,7 @@ public class AuthenticationController {
   @Path("/token")
   @PermitAll
   public TokenResponse generateToken(@Valid GetTokenRequest request) {
-    return authenticationService.generateToken(request);
+    tokenService.validateClientSecret(request.getClientSecret());
+    return tokenService.generateToken(request);
   }
 }
