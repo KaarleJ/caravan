@@ -1,5 +1,8 @@
 package org.caravan.mapper;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.caravan.dto.TripResponse;
 import org.caravan.model.Trip;
 
@@ -13,5 +16,11 @@ public class TripsMapper {
         .createdById(trip.getCreatedBy().getId())
         .participants(UserMapper.toUserResponseList(trip.getParticipants()))
         .build();
+  }
+
+  public static List<TripResponse> toTripResponses(List<Trip> trips) {
+    return trips.stream()
+        .map(TripsMapper::toTripResponse)
+        .collect(Collectors.toList());
   }
 }

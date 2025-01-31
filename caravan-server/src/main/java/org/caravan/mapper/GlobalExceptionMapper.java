@@ -11,7 +11,7 @@ import org.jboss.resteasy.reactive.server.ServerExceptionMapper;
 public class GlobalExceptionMapper {
 
   /*
-   * Returns HTTP 401 for an InvalidClientSecretException
+   * Returns HTTP 401 for a UserNotFoundException
    */
   @ServerExceptionMapper
   public RestResponse<String> handleUserNotFound(UserNotFoundException e) {
