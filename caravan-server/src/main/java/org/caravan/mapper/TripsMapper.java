@@ -13,7 +13,7 @@ public class TripsMapper {
         .name(trip.getName())
         .description(trip.getDescription())
         .date(trip.getDate())
-        .createdById(trip.getCreatedBy().getId())
+        .createdBy(UserMapper.toUserResponse(trip.getCreatedBy()))
         .participants(UserMapper.toUserResponseList(trip.getParticipants()))
         .build();
   }

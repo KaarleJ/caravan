@@ -17,7 +17,7 @@ public class TripResponse {
   private String name;
   private String description;
   private LocalDate date;
-  private String createdById;
+  private UserResponse createdBy;
   private List<UserResponse> participants;
   private List<RideResponse> rides;
 }
