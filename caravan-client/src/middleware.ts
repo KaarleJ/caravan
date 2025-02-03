@@ -8,4 +8,5 @@ export default auth((req) => {
   if (req.nextUrl.pathname === "/trips" && !req.auth) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
+  return NextResponse.next();
 });

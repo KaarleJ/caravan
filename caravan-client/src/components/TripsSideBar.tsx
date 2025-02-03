@@ -51,13 +51,13 @@ export default function TripsSideBar() {
   };
 
   return (
-    <div className="border-r py-5 px-20 flex flex-col justify-start gap-10">
+    <div className="border-r py-5 px-20 flex flex-col justify-start gap-10 w-[30rem]">
       <div>
         <h3 className="text-3xl font-bold pb-2">Filter trips</h3>
         {["upcoming", "completed", "canceled"].map((status) => (
           <div
             key={status}
-            className="flex items-center justify-between w-[9rem] px-2 py-2"
+            className="flex items-center justify-between px-2 py-2"
           >
             <Label
               htmlFor={`status-${status}`}
