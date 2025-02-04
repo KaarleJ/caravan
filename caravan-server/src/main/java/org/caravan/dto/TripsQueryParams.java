@@ -1,5 +1,6 @@
 package org.caravan.dto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import jakarta.ws.rs.QueryParam;
@@ -15,11 +16,11 @@ import lombok.NoArgsConstructor;
 public class TripsQueryParams {
 
   @QueryParam("status")
-  List<String> status;
+  private List<String> status;
 
   @QueryParam("startDate")
-  String startDate;
+  private LocalDate startDate;
 
   @QueryParam("endDate")
-  String endDate;
+  private LocalDate endDate;
 }

@@ -24,14 +24,15 @@ public class TripsRepository implements PanacheRepository<Trip> {
 
     if (queryParams.getStartDate() != null) {
       params.put("start", queryParams.getStartDate());
-      sb.append(" AND startDate >= :start");
+      sb.append(" AND date >= :start");
     }
 
     if (queryParams.getEndDate() != null) {
       params.put("end", queryParams.getEndDate());
-      sb.append(" AND endDate <= :end");
+      sb.append(" AND date <= :end");
     }
 
     return find(sb.toString(), params).list();
   }
+
 }
