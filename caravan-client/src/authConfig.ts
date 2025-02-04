@@ -110,6 +110,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async session({ session, token }) {
       session.apiToken = token.apiToken as string;
+      session.user.id = token.id as string;
       return session;
     },
   },

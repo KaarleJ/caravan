@@ -34,7 +34,7 @@ export type Trip = {
   name: string;
   description: string;
   date: string;
-  creator: User;
+  createdBy: User;
   participants: User[];
   rides: Ride[];
   status: "upcoming" | "completed" | "canceled";
