@@ -1,5 +1,5 @@
 "use server";
-import apiClient from "@/lib/apiClient";
+import apiClient, { serverClient } from "@/lib/apiClient";
 import { sharedSecret } from "@/lib/utils";
 import { AuthRequest, CreateUserRequest, GetTokenRequest } from "@/types";
 
@@ -36,9 +36,10 @@ export async function createUser(user: CreateUserRequest) {
 
 /*
   Fetch api token to interact with a custom backend
+  Uses serverClient to avoid infinite loop, since the apiClient triggers the jwt callback
 */
 export async function getApiToken(user: GetTokenRequest) {
-  const res = await apiClient.post("/auth/token", {
+  const res = await serverClient.post("/auth/token", {
     ...user,
     clientSecret: sharedSecret,
   });

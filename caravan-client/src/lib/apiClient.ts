@@ -10,6 +10,13 @@ const apiClient = axios.create({
   },
 });
 
+export const serverClient = axios.create({
+  baseURL: apiUrl,
+  paramsSerializer: (params) => {
+    return qs.stringify(params, { arrayFormat: "repeat" });
+  },
+});
+
 apiClient.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
     const session = await auth();
