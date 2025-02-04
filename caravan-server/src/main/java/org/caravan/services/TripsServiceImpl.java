@@ -9,6 +9,7 @@ import org.caravan.dto.UpdateTripRequest;
 import org.caravan.mapper.TripsMapper;
 import org.caravan.model.Trip;
 import org.caravan.model.User;
+import org.caravan.model.enums.TripStatus;
 import org.caravan.repository.TripsRepository;
 import org.caravan.security.UserContext;
 
@@ -38,6 +39,7 @@ public class TripsServiceImpl implements TripsService {
         .name(request.getName())
         .description(request.getDescription())
         .date(request.getDate())
+        .status(TripStatus.UPCOMING)
         .createdBy(creator)
         .participants(List.of(creator))
         .build();

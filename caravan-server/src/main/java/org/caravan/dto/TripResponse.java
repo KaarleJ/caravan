@@ -16,6 +16,7 @@ public class TripResponse {
   private Long id;
   private String name;
   private String description;
+  private String status;
   private LocalDate date;
   private UserResponse createdBy;
   private List<UserResponse> participants;
