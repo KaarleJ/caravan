@@ -5,6 +5,7 @@ import { Label } from "./ui/label";
 import { DateRangePicker } from "./DateRangePicker";
 import { DateRange } from "react-day-picker";
 import { format, parseISO } from "date-fns";
+import { Button } from "./ui/button";
 
 export default function TripsSideBar() {
   const router = useRouter();
@@ -51,7 +52,7 @@ export default function TripsSideBar() {
   };
 
   return (
-    <div className="border-r py-5 px-20 flex flex-col justify-start gap-10 w-[30rem]">
+    <div className="border-r py-20 px-20 flex flex-col justify-between gap-10 w-[30rem]">
       <div>
         <h3 className="text-3xl font-bold pb-2">Filter trips</h3>
         {["upcoming", "completed", "canceled"].map((status) => (
@@ -82,6 +83,9 @@ export default function TripsSideBar() {
           value={initialDateRange}
           onChange={handleDateChange}
         />
+      </div>
+      <div className="grow flex flex-col justify-end">
+        <Button className="w-full text-lg">New trip</Button>
       </div>
     </div>
   );
