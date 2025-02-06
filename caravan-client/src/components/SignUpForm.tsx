@@ -13,7 +13,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "./ui/button";
-import { signInWithCredentials } from "@/actions/signIn";
+import { signInWithCredentials } from "@/actions/signInAction";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 

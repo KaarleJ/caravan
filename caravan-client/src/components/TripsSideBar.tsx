@@ -5,7 +5,7 @@ import { Label } from "./ui/label";
 import { DateRangePicker } from "./DateRangePicker";
 import { DateRange } from "react-day-picker";
 import { format, parseISO } from "date-fns";
-import { Button } from "./ui/button";
+import CreateTripDialog from "./CreateTripDialog";
 
 export default function TripsSideBar() {
   const router = useRouter();
@@ -85,7 +85,7 @@ export default function TripsSideBar() {
         />
       </div>
       <div className="grow flex flex-col justify-end">
-        <Button className="w-full text-lg">New trip</Button>
+        <CreateTripDialog />
       </div>
     </div>
   );

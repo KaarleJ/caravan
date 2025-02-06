@@ -3,7 +3,12 @@ import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import type { Provider } from "next-auth/providers";
-import { createUser, getApiToken, login, register } from "./actions/auth";
+import {
+  createUser,
+  getApiToken,
+  login,
+  register,
+} from "./actions/authActions";
 import { CreateUserRequest } from "./types";
 import axios from "axios";
 
