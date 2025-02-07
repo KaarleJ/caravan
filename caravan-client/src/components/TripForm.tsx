@@ -1,8 +1,7 @@
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 import { z } from "zod";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -22,31 +21,14 @@ import {
 } from "@/components/ui/popover";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import { createTrip } from "@/actions/tripsActions";
-import { useRouter } from "next/navigation";
 import { tripFormSchema } from "@/lib/formSchemas";
 
-export default function CreateTripForm() {
-  const router = useRouter();
+export interface TripFormProps {
+  form: UseFormReturn<z.infer<typeof tripFormSchema>>;
+  onSubmit: (data: z.infer<typeof tripFormSchema>) => Promise<void>;
+}
 
-  const form = useForm<z.infer<typeof tripFormSchema>>({
-    resolver: zodResolver(tripFormSchema),
-    defaultValues: {
-      name: "",
-      description: "",
-      date: new Date(),
-    },
-  });
-
-  async function onSubmit(data: z.infer<typeof tripFormSchema>) {
-    const res = await createTrip(data);
-    if ("error" in res) {
-      form.setError("root", { message: res.error });
-      return;
-    }
-    router.push(`/trips/${res.id}`);
-  }
-
+export default function TripForm({ form, onSubmit }: TripFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

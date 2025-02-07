@@ -14,7 +14,12 @@ import {
   ModalBody,
 } from "@/components/ui/modal";
 import { Button } from "./ui/button";
-import CreateTripForm from "./CreateTripForm";
+import CreateTripForm from "./TripForm";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { tripFormSchema } from "@/lib/formSchemas";
+import { z } from "zod";
+import { createTrip } from "@/actions/tripsActions";
 
 export default function TripsSideBar() {
   const router = useRouter();
@@ -60,6 +65,24 @@ export default function TripsSideBar() {
     router.push(`/trips?${params.toString()}`);
   };
 
+  const form = useForm<z.infer<typeof tripFormSchema>>({
+    resolver: zodResolver(tripFormSchema),
+    defaultValues: {
+      name: "",
+      description: "",
+      date: new Date(),
+    },
+  });
+
+  async function onSubmit(data: z.infer<typeof tripFormSchema>) {
+    const res = await createTrip(data);
+    if ("error" in res) {
+      form.setError("root", { message: res.error });
+      return;
+    }
+    router.push(`/trips/${res.id}`);
+  }
+
   return (
     <div className="border-r py-20 px-20 flex flex-col justify-between gap-10 w-[30rem]">
       <div>
@@ -103,7 +126,7 @@ export default function TripsSideBar() {
             <ModalTitle>New Trip</ModalTitle>
           </ModalHeader>
           <ModalBody>
-            <CreateTripForm />
+            <CreateTripForm form={form} onSubmit={onSubmit} />
           </ModalBody>
         </ModalContent>
       </Modal>
