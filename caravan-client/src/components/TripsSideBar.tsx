@@ -5,7 +5,16 @@ import { Label } from "./ui/label";
 import { DateRangePicker } from "./DateRangePicker";
 import { DateRange } from "react-day-picker";
 import { format, parseISO } from "date-fns";
-import CreateTripDialog from "./CreateTripDialog";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalTitle,
+  ModalTrigger,
+  ModalBody,
+} from "@/components/ui/modal";
+import { Button } from "./ui/button";
+import CreateTripForm from "./CreateTripForm";
 
 export default function TripsSideBar() {
   const router = useRouter();
@@ -84,9 +93,20 @@ export default function TripsSideBar() {
           onChange={handleDateChange}
         />
       </div>
-      <div className="grow flex flex-col justify-end">
-        <CreateTripDialog />
-      </div>
+
+      <Modal>
+        <ModalTrigger asChild>
+          <Button>New Trip</Button>
+        </ModalTrigger>
+        <ModalContent>
+          <ModalHeader>
+            <ModalTitle>New Trip</ModalTitle>
+          </ModalHeader>
+          <ModalBody>
+            <CreateTripForm />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </div>
   );
 }

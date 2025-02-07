@@ -13,7 +13,6 @@ export type createTripRequest = {
   name: string;
   description: string;
   date: Date;
-  createdById: string;
 };
 
 export type GetTokenRequest = {

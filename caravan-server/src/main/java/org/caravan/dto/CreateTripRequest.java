@@ -21,7 +21,4 @@ public class CreateTripRequest {
 
   @NotNull(message = "date is required")
   private LocalDate date;
-
-  @NotBlank(message = "createdById is required")
-  private String createdById;
 }
