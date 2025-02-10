@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateUserRequest {
-  @NotBlank(message = "clientSecret is required")
-  private String clientSecret;
 
   @NotBlank(message = "id is required")
   private String id;

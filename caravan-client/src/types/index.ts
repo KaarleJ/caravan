@@ -1,8 +1,3 @@
-export type AuthRequest = {
-  email: string;
-  password: string;
-};
-
 export type CreateUserRequest = {
   id?: string;
   email: string;
@@ -14,12 +9,6 @@ export type createTripRequest = {
   description: string;
   date: Date;
 };
-
-export type GetTokenRequest = {
-  userId: string;
-  email: string;
-  role: string;
-}
 
 export type User = {
   id: string;

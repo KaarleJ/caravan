@@ -1,8 +1,8 @@
+import { signIn } from "@/authConfig";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
   return (
     <main className="flex flex-col lg:flex-row gap-4 py-24 md:py-52 px-4 md:px-48">
       <div>
@@ -16,9 +16,16 @@ export default function Home() {
             riding, and how many seats are left.
           </p>
         </div>
-        <Link href="/login" passHref>
-          <Button className="my-16 p-6 text-xl">Get Started</Button>
-        </Link>
+        <form
+          action={async () => {
+            "use server";
+            await signIn("auth0");
+          }}
+        >
+          <Button type="submit" className="my-16 p-6 text-xl">
+            Get Started
+          </Button>
+        </form>
       </div>
       <div className="rounded-sm shadow-lg shadow-primary overflow-hidden">
         <Image

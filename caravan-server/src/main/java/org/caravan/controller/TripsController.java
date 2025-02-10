@@ -8,7 +8,7 @@ import org.caravan.dto.TripsQueryParams;
 import org.caravan.dto.UpdateTripRequest;
 import org.caravan.services.TripsService;
 
-import jakarta.annotation.security.RolesAllowed;
+import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -27,14 +27,14 @@ public class TripsController {
 
   @GET
   @Transactional
-  @RolesAllowed("user")
+  @Authenticated
   public List<TripResponse> getTrips(@BeanParam TripsQueryParams queryParams) {
     return tripsService.getTrips(queryParams);
   }
 
   @GET
   @Transactional
-  @RolesAllowed("user")
+  @Authenticated
   @Path("/{tripId}")
   public TripResponse getTripById(Long tripId) {
     return tripsService.getTripById(tripId);
@@ -42,14 +42,14 @@ public class TripsController {
 
   @POST
   @Transactional
-  @RolesAllowed("user")
+  @Authenticated
   public TripResponse createTrip(@Valid CreateTripRequest request) {
     return tripsService.createTrip(request);
   }
 
   @PUT
   @Transactional
-  @RolesAllowed("user")
+  @Authenticated
   @Path("/{tripId}")
   public TripResponse updateTrip(Long tripId, @Valid UpdateTripRequest request) {
     return tripsService.updateTrip(tripId, request);
@@ -57,9 +57,16 @@ public class TripsController {
 
   @DELETE
   @Transactional
-  @RolesAllowed("user")
+  @Authenticated
   @Path("/{tripId}")
   public void deleteTrip(Long tripId) {
     tripsService.deleteTrip(tripId);
+  }
+
+  @GET
+  @Authenticated
+  @Path("/ping")
+  public String ping() {
+    return "pong";
   }
 }
