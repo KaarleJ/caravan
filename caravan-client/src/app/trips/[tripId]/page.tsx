@@ -6,7 +6,7 @@ import { Trip } from "@/types";
 export default async function TripPage({
   params,
 }: {
-  params: { tripId: string };
+  params: Promise<{ tripId: string }>;
 }) {
   const { tripId } = await params;
   const session = await auth();
