@@ -6,10 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          cd caravan-client
-          npm i
-          npm run build
       - uses: amondnet/vercel-action@v25 #deploy
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
