@@ -1,20 +1,18 @@
 "use server";
 
-import apiClient from "@/lib/apiClient";
+import { apiClient } from "@/lib/apiClient";
 import { createTripRequest, Trip, updateTripRequest } from "@/types";
-import axios from "axios";
 
 export async function createTrip(
   trip: createTripRequest
 ): Promise<Trip | { error: string }> {
   try {
-    const { data } = await apiClient.post<Trip>("/trips", trip);
+    const data = await apiClient<Trip>("/trips", { method: "POST", body: trip });
     return data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
+  } catch (error: Error | unknown) {
+    if (error instanceof Error) {
       return {
-        error:
-          error.response?.data.message.split(":")[1] || "An error occurred",
+        error: error.message.split(":")[1] || "An error occurred",
       };
     }
     return { error: "An error occurred" };
@@ -26,13 +24,12 @@ export async function updateTrip(
   trip: updateTripRequest
 ): Promise<Trip | { error: string }> {
   try {
-    const { data } = await apiClient.put<Trip>(`/trips/${tripId}`, trip);
+    const data = await apiClient<Trip>(`/trips/${tripId}`, { method: "PUT", body: trip });
     return data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
+  } catch (error: Error | unknown) {
+    if (error instanceof Error) {
       return {
-        error:
-          error.response?.data.message.split(":")[1] || "An error occurred",
+        error: error.message.split(":")[1] || "An error occurred",
       };
     }
     return { error: "An error occurred" };
@@ -40,5 +37,5 @@ export async function updateTrip(
 }
 
 export async function deleteTrip(tripId: string): Promise<void> {
-  await apiClient.delete(`/trips/${tripId}`);
+  await apiClient(`/trips/${tripId}`, { method: "DELETE" });
 }

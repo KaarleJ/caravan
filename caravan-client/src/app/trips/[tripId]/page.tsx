@@ -1,6 +1,6 @@
 import { auth } from "@/authConfig";
 import TripSideBar from "@/components/TripSideBar";
-import apiClient from "@/lib/apiClient";
+import { apiClient } from "@/lib/apiClient";
 import { Trip } from "@/types";
 
 export default async function TripPage({
@@ -11,7 +11,7 @@ export default async function TripPage({
   const { tripId } = await params;
   const session = await auth();
 
-  const { data: trip } = await apiClient.get<Trip>(`/trips/${tripId}`);
+  const trip = await apiClient<Trip>(`/trips/${tripId}`);
   return (
     <div className="pt-20 h-screen flex">
       <TripSideBar trip={trip} session={session} />

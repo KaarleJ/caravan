@@ -1,7 +1,7 @@
 import { auth } from "@/authConfig";
 import TripCard from "@/components/TripCard";
 import TripsSideBar from "@/components/TripsSideBar";
-import apiClient from "@/lib/apiClient";
+import { apiClient} from "@/lib/apiClient";
 import { Trip } from "@/types";
 
 export default async function Trips({
@@ -13,7 +13,7 @@ export default async function Trips({
   const user = session?.user;
   const params = await searchParams;
 
-  const { data: trips } = await apiClient.get<Trip[]>("/trips", {
+  const trips = await apiClient<Trip[]>("/trips", {
     params,
   });
 
