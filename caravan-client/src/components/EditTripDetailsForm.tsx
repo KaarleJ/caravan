@@ -7,8 +7,9 @@ import { useForm } from "react-hook-form";
 import { tripFormSchema } from "@/lib/formSchemas";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { createTrip } from "@/actions/tripsActions";
+import { updateTrip } from "@/actions/tripsActions";
 import TripForm from "./TripForm";
+import { format } from "date-fns";
 
 export default function EditTripDetailsForm({ trip }: { trip: Trip }) {
   const [edit, setEdit] = useState(false);
@@ -24,22 +25,24 @@ export default function EditTripDetailsForm({ trip }: { trip: Trip }) {
   });
 
   async function onSubmit(data: z.infer<typeof tripFormSchema>) {
-    const res = await createTrip(data);
-    if ("error" in res) {
+    const res = await updateTrip(trip.id, data);
+    if (typeof res === "object" && res !== null && "error" in res) {
       form.setError("root", { message: res.error });
       return;
     }
-    router.push(`/trips/${res.id}`);
+    setEdit(false);
+    router.push(`/trips/${trip.id}`);
   }
 
   return edit ? (
     <TripForm form={form} onSubmit={onSubmit} />
   )
   : (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-2">
       <h2 className="text-3xl">{trip.name}</h2>
-      <p className="text-gray-600">{trip.description}</p>
-      <Button onClick={() => setEdit(true)}>Edit</Button>
+      <p className="text-accent-foreground/75">{format(trip.date, "dd.MM.yyyy")}</p>
+      <p className="text-accent-foreground/90 text-lg">{trip.description}</p>
+      <Button className="my-2" onClick={() => setEdit(true)}>Edit</Button>
     </div>
   );
 }

@@ -62,11 +62,4 @@ public class TripsController {
   public void deleteTrip(Long tripId) {
     tripsService.deleteTrip(tripId);
   }
-
-  @GET
-  @Authenticated
-  @Path("/ping")
-  public String ping() {
-    return "pong";
-  }
 }

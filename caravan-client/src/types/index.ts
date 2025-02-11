@@ -10,6 +10,12 @@ export type createTripRequest = {
   date: Date;
 };
 
+export type updateTripRequest = {
+  name: string;
+  description: string;
+  date: Date;
+};
+
 export type User = {
   id: string;
   email: string;

@@ -17,7 +17,7 @@ export default async function TripPage({
       <TripSideBar trip={trip} session={session} />
       <div className="p-4 w-full">
         <h1 className="text-7xl pb-4">{trip.name}</h1>
-        <p className="text-lg px-2 text-gray-600">
+        <p className="text-lg px-2 text-accent-foreground/75">
           {trip.description}
         </p>
       </div>

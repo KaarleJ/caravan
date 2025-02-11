@@ -69,6 +69,7 @@ public class TripsServiceImpl implements TripsService {
     userContext.validateOwnerShip(trip.getCreatedBy().getId());
     trip.setName(request.getName());
     trip.setDescription(request.getDescription());
+    trip.setDate(request.getDate());
     tripsRepository.persist(trip);
     return null;
   }

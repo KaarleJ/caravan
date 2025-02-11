@@ -76,7 +76,7 @@ export default function TripsSideBar() {
 
   async function onSubmit(data: z.infer<typeof tripFormSchema>) {
     const res = await createTrip(data);
-    if ("error" in res) {
+    if (typeof res === "object" && res !== null && "error" in res) {
       form.setError("root", { message: res.error });
       return;
     }
