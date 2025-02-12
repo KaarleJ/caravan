@@ -24,7 +24,7 @@ jobs:
 
       - name: Build Quarkus native image
         run: |
-          cd caravan-server \
+          cd caravan-server
           mvn clean package -Pnative -Dquarkus.native.container-build=true
 
       - name: Configure AWS credentials
