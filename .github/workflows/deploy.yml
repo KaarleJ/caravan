@@ -51,6 +51,6 @@ jobs:
       - name: Update AWS Lambda function code
         run: |
           aws lambda update-function-code \
-          --function-name my-quarkus-lambda \
+          --function-name ${{ secrets.AWS_LAMBDA_FUNCTION }} \
           --image-uri $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
           --region ${{ secrets.AWS_REGION }}
