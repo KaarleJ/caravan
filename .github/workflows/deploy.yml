@@ -31,7 +31,7 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
-      - name: Build Quarkus native image
+      - name: Build Quarkus native profile
         run: |
           cd caravan-server
           mvn clean package -Pnative -Dquarkus.native.container-build=true
@@ -56,6 +56,12 @@ jobs:
           docker build -f caravan-server/src/main/docker/Dockerfile.native-micro -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG caravan-server
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+      
+      - name: Debug image uri
+        run: |
+          echo "ECR Registry (non-secret portion): eu-north-1.amazonaws.com"
+          echo "Repository name: $ECR_REPOSITORY"
+          echo "Tag: $IMAGE_TAG"
 
       - name: Update AWS Lambda function code
         run: |
