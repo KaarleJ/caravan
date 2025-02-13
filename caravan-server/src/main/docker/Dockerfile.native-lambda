@@ -1,0 +1,8 @@
+FROM  public.ecr.aws/lambda/provided:al2
+
+
+COPY target/caravan-server-1.0 /var/runtime/bootstrap
+
+RUN chmod ugo+x /var/runtime/bootstrap
+
+CMD [ "io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler::handleRequest" ]
