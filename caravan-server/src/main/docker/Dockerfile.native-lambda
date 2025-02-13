@@ -1,0 +1,6 @@
+FROM  public.ecr.aws/lambda/provided
+
+ADD target/my-service-0.0.1-SNAPSHOT-runner /var/runtime/bootstrap
+RUN chmod ugo+x /var/runtime/bootstrap
+
+CMD ["io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler::handleRequest"]
