@@ -51,7 +51,7 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         run: |
-          docker build -f caravan-server/src/main/docker/Dockerfile.native-lambda -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG caravan-server
+          docker build -f caravan-server/src/main/docker/Dockerfile.native-micro -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG caravan-server
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
       
