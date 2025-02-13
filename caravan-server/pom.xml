@@ -85,12 +85,6 @@
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-hibernate-validator</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-amazon-lambda-http-archetype</artifactId>
-            <version>3.18.3</version>
-        </dependency>
-
     </dependencies>
 
     <build>
