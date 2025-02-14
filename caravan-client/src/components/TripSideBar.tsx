@@ -1,10 +1,10 @@
 import { Trip } from "@/types";
 import { Button } from "./ui/button";
 import { Session } from "next-auth";
-import BackButton from "./BackButton";
 import EditTripDetailsForm from "./EditTripDetailsForm";
 import { deleteTrip } from "@/actions/tripsActions";
 import { redirect } from "next/navigation";
+import SideBar from "./SideBar";
 
 export default function TripSideCard({
   trip,
@@ -22,8 +22,7 @@ export default function TripSideCard({
   }
 
   return owner ? (
-    <div className="flex flex-col px-20 py-20 justify-between border-r gap-5 w-[35rem] relative">
-      <BackButton  className="absolute top-5 left-10"/>
+    <SideBar>
       <div className="grow">
         <EditTripDetailsForm trip={trip} />
       </div>
@@ -40,11 +39,10 @@ export default function TripSideCard({
       <form action={destroy} className="flex flex-col gap-4">
         <Button type="submit" variant="destructive">Delete Trip</Button>
       </form>
-    </div>
+    </SideBar>
   ) : (
-    <div className="flex flex-col px-20 py-20 justify-between border-r w-[35rem]">
-      <BackButton />
+    <SideBar>
       <Button variant="destructive">Leave trip</Button>
-    </div>
+    </SideBar>
   );
 }

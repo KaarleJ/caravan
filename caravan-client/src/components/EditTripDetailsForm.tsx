@@ -39,7 +39,7 @@ export default function EditTripDetailsForm({ trip }: { trip: Trip }) {
   )
   : (
     <div className="flex flex-col gap-2">
-      <h2 className="text-3xl">{trip.name}</h2>
+      <h2 className="text-3xl font-bold">{trip.name}</h2>
       <p className="text-accent-foreground/75">{format(trip.date, "dd.MM.yyyy")}</p>
       <p className="text-accent-foreground/90 text-lg">{trip.description}</p>
       <Button className="my-2" onClick={() => setEdit(true)}>Edit</Button>

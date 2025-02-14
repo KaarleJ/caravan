@@ -13,7 +13,7 @@ export default async function TripPage({
 
   const trip = await apiClient<Trip>(`/trips/${tripId}`);
   return (
-    <div className="pt-20 h-screen flex">
+    <>
       <TripSideBar trip={trip} session={session} />
       <div className="p-4 w-full">
         <h1 className="text-7xl pb-4">{trip.name}</h1>
@@ -21,6 +21,6 @@ export default async function TripPage({
           {trip.description}
         </p>
       </div>
-    </div>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 import { auth } from "@/authConfig";
 import TripCard from "@/components/TripCard";
 import TripsSideBar from "@/components/TripsSideBar";
-import { apiClient} from "@/lib/apiClient";
+import { apiClient } from "@/lib/apiClient";
 import { Trip } from "@/types";
 
 export default async function Trips({
@@ -18,7 +18,7 @@ export default async function Trips({
   });
 
   return (
-    <div className="pt-20 h-screen flex">
+    <>
       <TripsSideBar />
       <div className="p-4 w-full">
         <h1 className="text-7xl pb-4">Trips for {user?.email}</h1>
@@ -28,6 +28,6 @@ export default async function Trips({
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 }

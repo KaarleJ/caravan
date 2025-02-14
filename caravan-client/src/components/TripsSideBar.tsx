@@ -20,6 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { tripFormSchema } from "@/lib/formSchemas";
 import { z } from "zod";
 import { createTrip } from "@/actions/tripsActions";
+import SideBar from "./SideBar";
 
 export default function TripsSideBar() {
   const router = useRouter();
@@ -84,13 +85,13 @@ export default function TripsSideBar() {
   }
 
   return (
-    <div className="border-r py-20 px-20 flex flex-col justify-between gap-10 w-[30rem]">
+    <SideBar>
       <div>
         <h3 className="text-3xl font-bold pb-2">Filter trips</h3>
         {["upcoming", "completed", "canceled"].map((status) => (
           <div
             key={status}
-            className="flex items-center justify-between px-2 py-2"
+            className="flex items-center justify-between py-2"
           >
             <Label
               htmlFor={`status-${status}`}
@@ -111,7 +112,6 @@ export default function TripsSideBar() {
       <div>
         <h3 className="text-3xl font-bold pb-2">Date range</h3>
         <DateRangePicker
-          className="py-4"
           value={initialDateRange}
           onChange={handleDateChange}
         />
@@ -130,6 +130,6 @@ export default function TripsSideBar() {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </div>
+    </SideBar>
   );
 }
