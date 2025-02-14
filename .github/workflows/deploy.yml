@@ -57,10 +57,6 @@ jobs:
       - name: Trigger App Runner Deployment
         run: |
           aws apprunner start-deployment --service-arn ${{ secrets.AWS_APPRUNNER_ARN }}
-      
-      - name: Wait for App Runner Deployment to stabilize
-        run: |
-          aws apprunner wait service-stable --service-arn ${{ secrets.AWS_APPRUNNER_ARN }}
 
   build-frontend:
     runs-on: ubuntu-latest
