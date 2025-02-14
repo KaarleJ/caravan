@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 export default async function Home() {
   return (
     <main>
-      <div className="relative h-screen bg-[url('/caravan.jpg')] bg-center bg-cover">
+      <div className="relative h-screen bg-[url('/caravan.jpg')] bg-center bg-cover z-10">
         {/* Overlay */}
-        <div className="absolute inset-0 bg-black opacity-35"></div>
+        <div className="absolute inset-0 z-0 bg-black opacity-25"></div>
 
         <div className="relative z-10 flex flex-col items-center justify-center pb-20 h-screen">
           <div className="max-w-2xl text-center mx-auto">
