@@ -54,12 +54,15 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-        
       - name: Trigger App Runner Deployment
         run: |
           aws apprunner start-deployment --service-arn ${{ secrets.AWS_APPRUNNER_ARN }}
+      
+      - name: Wait for App Runner Deployment to stabilize
+        run: |
+          aws apprunner wait service-stable --service-arn ${{ secrets.AWS_APPRUNNER_ARN }}
 
-  build-deploy-frontend:
+  build-frontend:
     runs-on: ubuntu-latest
     env:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -67,7 +70,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
@@ -76,6 +79,15 @@ jobs:
 
       - name: Build Project Artifacts
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-        
+
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    needs:
+      - build-frontend
+      - build-deploy-backend
+    env:
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
       - name: Deploy Project Artifacts to Vercel
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
