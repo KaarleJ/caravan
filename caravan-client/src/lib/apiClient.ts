@@ -55,7 +55,7 @@ export async function apiClient<T = unknown>(
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`Fetch error (${response.status}): ${errorText}`);
+    throw new Error(`Error ${response.status}${errorText && ": " + errorText}`);
   }
 
   if (response.body) {

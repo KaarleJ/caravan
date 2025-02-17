@@ -11,9 +11,11 @@ import { auth, signIn } from "@/authConfig";
 import Image from "next/image";
 import AvatarMenu from "./AvatarMenu";
 import { Button } from "./ui/button";
+import { signOut } from "@/actions/auth";
 
 export default async function Navbar() {
   const session = await auth();
+
 
   return (
     <NavigationMenu className="px-4 md:px-48 py-3 max-w-full w-full justify-between fixed top-0 right-0 border-b backdrop-opacity-75 backdrop-blur-lg z-50">
@@ -44,11 +46,9 @@ export default async function Navbar() {
                 await signIn("auth0", { options: { prompt: "login" } });
               }}
             >
-              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                <Button type="submit" variant="ghost">
+              <Button type="submit" className={navigationMenuTriggerStyle()} variant="ghost">
                   Login
-                </Button>
-              </NavigationMenuLink>
+              </Button>
             </form>
           </NavigationMenuItem>
         )}

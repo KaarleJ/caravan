@@ -5,9 +5,7 @@ export default async function Home() {
   return (
     <main>
       <div className="relative h-screen bg-[url('/caravan.jpg')] bg-center bg-cover z-10">
-        {/* Overlay */}
         <div className="absolute inset-0 z-0 bg-black opacity-25"></div>
-
         <div className="relative z-10 flex flex-col items-center justify-center pb-20 h-screen">
           <div className="max-w-2xl text-center mx-auto">
             <p className="text-lg">Share rides easily</p>
