@@ -71,7 +71,7 @@ public class TripsServiceImpl implements TripsService {
     trip.setDescription(request.getDescription());
     trip.setDate(request.getDate());
     tripsRepository.persist(trip);
-    return null;
+    return TripsMapper.toTripResponse(trip);
   }
 
   public void deleteTrip(Long tripId) {

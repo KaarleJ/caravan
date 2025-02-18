@@ -7,13 +7,13 @@ export type CreateUserRequest = {
 export type createTripRequest = {
   name: string;
   description: string;
-  date: Date;
+  date: string;
 };
 
 export type updateTripRequest = {
   name: string;
   description: string;
-  date: Date;
+  date: string;
 };
 
 export type User = {

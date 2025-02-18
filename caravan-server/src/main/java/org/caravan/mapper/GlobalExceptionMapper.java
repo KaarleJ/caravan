@@ -17,6 +17,7 @@ public class GlobalExceptionMapper {
   public RestResponse<String> handleUserNotFound(UserNotFoundException e) {
     return RestResponse.status(Response.Status.NOT_FOUND, e.getMessage());
   }
+
   /*
    * Returns HTTP 401 for an InvalidCredentialsException
    */
@@ -31,5 +32,13 @@ public class GlobalExceptionMapper {
   @ServerExceptionMapper
   public RestResponse<String> handleInvalidClientSecret(InvalidClientSecretException e) {
     return RestResponse.status(Response.Status.UNAUTHORIZED, e.getMessage());
+  }
+
+  /*
+   * Override 404 response to include a message
+   */
+  @ServerExceptionMapper
+  public RestResponse<String> handleNotFound(Exception e) {
+    return RestResponse.status(Response.Status.NOT_FOUND, "{\"message\": \"Resource not found\"}");
   }
 }

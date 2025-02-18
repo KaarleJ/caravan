@@ -7,7 +7,7 @@ export default async function Home() {
       <div className="relative h-screen bg-[url('/caravan.jpg')] bg-center bg-cover z-10">
         <div className="absolute inset-0 z-0 bg-black opacity-25"></div>
         <div className="relative z-10 flex flex-col items-center justify-center pb-20 h-screen">
-          <div className="px-4 max-w-2xl text-center mx-auto">
+          <div className="px-4 max-w-2xl text-center text-white">
             <p className="text-lg">Share rides easily</p>
             <div className="mt-5 max-w-2xl">
               <h1 className="text-6xl font-extrabold">Caravan</h1>

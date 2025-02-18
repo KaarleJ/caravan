@@ -10,9 +10,11 @@ import { useRouter } from "next/navigation";
 import { updateTrip } from "@/actions/tripsActions";
 import TripForm from "./TripForm";
 import { format } from "date-fns";
+import { useToast } from "@/hooks/use-toast";
 
 export default function EditTripDetailsForm({ trip }: { trip: Trip }) {
   const [edit, setEdit] = useState(false);
+  const { toast } = useToast();
   const router = useRouter();
 
   const form = useForm<z.infer<typeof tripFormSchema>>({
@@ -25,13 +27,19 @@ export default function EditTripDetailsForm({ trip }: { trip: Trip }) {
   });
 
   async function onSubmit(data: z.infer<typeof tripFormSchema>) {
-    const res = await updateTrip(trip.id, data);
+    const res = await updateTrip(trip.id, { ...data, date: format(data.date, "yyyy-MM-dd") });
+
     if (typeof res === "object" && res !== null && "error" in res) {
       form.setError("root", { message: res.error });
       return;
     }
+
     setEdit(false);
     router.push(`/trips/${trip.id}`);
+    toast({
+      title: `Trip ${res.name} updated!`,
+      description: format(new Date(res.date), "LLLL do, yyyy"),
+    });
   }
 
   return edit ? (

@@ -54,7 +54,8 @@ export async function apiClient<T = unknown>(
   });
 
   if (!response.ok) {
-    const errorText = await response.text();
+    const res = await response.json() as { message: string };
+    const errorText = res.message;
     throw new Error(`Error ${response.status}${errorText && ": " + errorText}`);
   }
 

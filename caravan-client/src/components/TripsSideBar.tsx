@@ -21,9 +21,11 @@ import { tripFormSchema } from "@/lib/formSchemas";
 import { z } from "zod";
 import { createTrip } from "@/actions/tripsActions";
 import SideBar from "./SideBar";
+import { useToast } from "@/hooks/use-toast";
 
 export default function TripsSideBar() {
   const router = useRouter();
+  const { toast } = useToast();
   const searchParams = useSearchParams();
 
   function handleStatusFilter(value: string, checked: boolean) {
@@ -76,12 +78,17 @@ export default function TripsSideBar() {
   });
 
   async function onSubmit(data: z.infer<typeof tripFormSchema>) {
-    const res = await createTrip(data);
+    const res = await createTrip({ ...data, date: format(data.date, "yyyy-MM-dd") });
     if (typeof res === "object" && res !== null && "error" in res) {
       form.setError("root", { message: res.error });
       return;
     }
+
     router.push(`/trips/${res.id}`);
+    toast({
+      title: `Trip ${res.name} created!`,
+      description: format(new Date(res.date), "LLLL do, yyyy"),
+    });
   }
 
   return (
@@ -89,10 +96,7 @@ export default function TripsSideBar() {
       <div>
         <h3 className="text-3xl font-bold pb-2">Filter trips</h3>
         {["upcoming", "completed", "canceled"].map((status) => (
-          <div
-            key={status}
-            className="flex items-center justify-between py-2"
-          >
+          <div key={status} className="flex items-center justify-between py-2">
             <Label
               htmlFor={`status-${status}`}
               className="text-base capitalize"
@@ -111,10 +115,7 @@ export default function TripsSideBar() {
       </div>
       <div>
         <h3 className="text-3xl font-bold pb-2">Date range</h3>
-        <DateRangePicker
-          value={initialDateRange}
-          onChange={handleDateChange}
-        />
+        <DateRangePicker value={initialDateRange} onChange={handleDateChange} />
       </div>
 
       <Modal>
