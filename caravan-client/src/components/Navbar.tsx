@@ -21,7 +21,7 @@ export default async function Navbar() {
   }
 
   return (
-    <NavigationMenu className="px-4 md:px-48 py-3 max-w-full w-full justify-between fixed top-0 right-0 border-b backdrop-opacity-75 backdrop-blur-lg z-50">
+    <NavigationMenu className="px-4 md:px-20 py-3 max-w-full w-full justify-between fixed top-0 right-0 border-b backdrop-opacity-75 backdrop-blur-lg z-50">
       <Link href="/">
         <Image
           src="/caravan-banner.png"
