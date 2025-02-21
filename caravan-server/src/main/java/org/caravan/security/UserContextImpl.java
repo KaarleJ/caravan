@@ -19,7 +19,6 @@ public class UserContextImpl implements UserContext {
 
   public User getCurrentUser() {
     String currentUserId = securityIdentity.getPrincipal().getName();
-    System.out.println("currentUserId: " + currentUserId);
     return userRepository.findById(currentUserId);
   }
 
