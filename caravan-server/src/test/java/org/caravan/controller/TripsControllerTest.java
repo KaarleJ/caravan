@@ -15,6 +15,14 @@ import static org.hamcrest.Matchers.*;
 public class TripsControllerTest {
 
   @Test
+  public void testGetTripsNoAuth() {
+    given()
+        .when().get("/trips")
+        .then()
+        .statusCode(401);
+  }
+
+  @Test
   @TestSecurity(user = "test|1234")
   public void testGetTrips() {
     given()
@@ -64,6 +72,15 @@ public class TripsControllerTest {
 
   @Test
   @TestSecurity(user = "test|1234")
+  public void testGetTripByIdNotFound() {
+    given()
+        .when().get("/trips/999999")
+        .then()
+        .statusCode(404);
+  }
+
+  @Test
+  @TestSecurity(user = "test|1234")
   public void testUpdateTrip() {
     String tripId = given()
         .contentType(ContentType.JSON)
@@ -106,4 +123,14 @@ public class TripsControllerTest {
         .then()
         .statusCode(404);
   }
+
+  @Test
+  @TestSecurity(user = "test|12345")
+  public void testDeleteTripOfAnotherUser() {
+    given()
+        .when().delete("/trips/" + 1)
+        .then()
+        .statusCode(403);
+  }
+
 }

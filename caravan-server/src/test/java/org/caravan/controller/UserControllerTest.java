@@ -25,4 +25,20 @@ class UserControllerTest {
         .then()
         .statusCode(200);
   }
+
+  @Test
+  void testCreateUserReturns204() {
+    CreateUserRequest request = CreateUserRequest.builder()
+        .id("test|1234")
+        .email("tester@test.com")
+        .build();
+
+    given()
+        .contentType(ContentType.JSON)
+        .body(request)
+        .when()
+        .post("/users")
+        .then()
+        .statusCode(204);
+  }
 }
