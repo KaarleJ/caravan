@@ -13,7 +13,7 @@ class UserControllerTest {
   void testCreateUser() {
     CreateUserRequest request = CreateUserRequest.builder()
         .id("1")
-        .email("test@tester.com")
+        .email("tester@test.com")
         .profilePicture("https://www.test.com")
         .build();
 
@@ -29,8 +29,8 @@ class UserControllerTest {
   @Test
   void testCreateUserReturns204() {
     CreateUserRequest request = CreateUserRequest.builder()
-        .id("test|1234")
-        .email("tester@test.com")
+        .id("test|12346")
+        .email("test@tester.com")
         .build();
 
     given()

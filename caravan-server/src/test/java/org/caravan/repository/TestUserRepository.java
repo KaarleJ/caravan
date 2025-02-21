@@ -14,10 +14,8 @@ public class TestUserRepository extends UserRepository {
 
   @PostConstruct
   public void init() {
-    User user = User.builder().id("test|1234").email("tester@test.com").build();
-    User user2 = User.builder().id("test|12345").email("tester2@test.com").build();
+    User user = User.builder().id("test|1234").email("test@tester.com").build();
     persist(user);
-    persist(user2);
   }
 
 }
